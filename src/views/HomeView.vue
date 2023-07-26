@@ -1,9 +1,14 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+    import { RouterView } from 'vue-router';
+    import TodoHeader from '../components/TodoHeader.vue';
 </script>
 
+
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <!-- make a TODO app with CRUD -->
+  This is the home view
 </template>
+
+<style>
+
+</style>
