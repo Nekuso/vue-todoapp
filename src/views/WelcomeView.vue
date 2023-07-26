@@ -11,7 +11,6 @@
             <RouterLink to="/home" class="button">
                 Go to app
             </RouterLink>
-            
 
         </div>
     </div>

@@ -1,11 +1,19 @@
 <script setup>
-    import { ref } from 'vue';
-    import TodoItem from '../components/TodoItem.vue';
-  
-    const todo = ref('asdasd');
+  import { ref } from 'vue';
+  import { uid } from 'uid'
+  import TodoItem from '../components/TodoItem.vue';
+  import TodoCreator from '../components/TodoCreator.vue';
 
+  const todoList = ref([]);
 
-
+  const addTodo = (todo) => {
+    todoList.value.push({
+      id: uid(),
+      todo,
+      isCompleted: null,
+      isEditing: null,
+    })
+  }
 
 </script>
 
@@ -14,12 +22,8 @@
   <div class="card">
     <div class="card__header">
       <h2 class="card__title">Welcome Back!</h2>
-      <div class="input__container">
-        <input v-model="todo" type="text">
-        <button><i class='bx bxs-send'></i></button>
-      </div>
+      <TodoCreator @add-todo="addTodo"/>
     </div>
-
     <div class="todo__lists">
       <p>{{ todo }}</p>
     </div>
@@ -47,45 +51,6 @@
       flex-direction: column;
       gap: 1rem;
       padding: .5rem 0;
-
-      .input__container {
-        display: flex;
-        align-items: center;
-        gap: .6rem;
-        width: 100%;
-
-        input {
-          width: 100%;
-          padding: .7rem;
-          border: none;
-          border-radius: 10px;
-          outline: none;
-          font-size: 1rem;
-          background-color: #e9e8e8;
-        }
-
-        button {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: .7rem 1.2rem;
-          border: none;
-          border-radius: 10px;
-          background-color: #1e90ff;
-          color: #fff;
-          cursor: pointer;
-          transition: all .3s ease;
-
-          &:hover {
-            background-color: #1877e6;
-          }
-
-          i {
-            font-size: 1rem;
-            color: white;
-          }
-        }
-      }
     }
 
     .todo__lists {
