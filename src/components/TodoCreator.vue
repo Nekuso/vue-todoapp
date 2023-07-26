@@ -12,7 +12,7 @@
 
 <template>
   <div class="input__container">
-    <input v-model="todo" type="text">
+    <input v-model="todo" type="text"> 
     <button @click="addTodo"><i class='bx bxs-send'></i></button>
   </div>
 </template>
