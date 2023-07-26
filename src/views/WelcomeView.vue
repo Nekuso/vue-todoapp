@@ -1,6 +1,5 @@
 <script setup>
     import { RouterView, RouterLink } from 'vue-router';
-    import TodoHeader from '../components/TodoHeader.vue';
 </script>
 
 
