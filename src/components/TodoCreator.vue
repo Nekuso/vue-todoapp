@@ -10,7 +10,6 @@
 
 </script>
 
-
 <template>
   <div class="input__container">
     <input v-model="todo" type="text">

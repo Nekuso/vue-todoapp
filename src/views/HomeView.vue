@@ -1,6 +1,6 @@
 <script setup>
   import { ref } from 'vue';
-  import { uid } from 'uid'
+  import { uid } from 'uid';
   import TodoItem from '../components/TodoItem.vue';
   import TodoCreator from '../components/TodoCreator.vue';
 
@@ -12,7 +12,7 @@
       todo,
       isCompleted: null,
       isEditing: null,
-    })
+    });
   }
 
 </script>
