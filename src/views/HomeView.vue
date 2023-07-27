@@ -45,7 +45,7 @@ function addTodoProps(todoProps) {
   <div class="wrapper">
     <!-- Modals -->
     <div v-show="createMode" class="overlay">
-      <TodoCreator @todo-props="addTodoProps" />
+      <TodoCreator @toggle="toggleCreateMode" @todo-props="addTodoProps" />
     </div>
 
     <main>
@@ -60,11 +60,14 @@ function addTodoProps(todoProps) {
       </div>
 
       <div class="content__categories">
-        <div class="all__items">
-          {{ todoList }}
+        <div class="all__items category">
+          <h2>All Todos</h2>
+          <div class="all__items__content">
+            {{ todoList }}
+          </div>
         </div>
-        <div class="pending__items"></div>
-        <div class="completed__items"></div>
+        <div class="pending__items category"></div>
+        <div class="completed__items category"></div>
       </div>
     </main>
   </div>
@@ -229,9 +232,19 @@ function addTodoProps(todoProps) {
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 
       gap: 10px;
-      .all__items {
+
+      .category {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
         border-radius: 1rem;
-        background-color: #d6d6d6;
+        padding: 1.6rem;
+        gap: 1rem;
+        border: 1px solid #282936;
+        background-color: #dadada;
+      }
+      .all__items {
         grid-row-start: 1;
         grid-column-start: 1;
 
@@ -239,8 +252,6 @@ function addTodoProps(todoProps) {
         grid-column-end: 4;
       }
       .pending__items {
-        border-radius: 1rem;
-        background-color: #d6d6d6;
         grid-row-start: 1;
         grid-column-start: 4;
 
@@ -248,8 +259,6 @@ function addTodoProps(todoProps) {
         grid-column-end: 6;
       }
       .completed__items {
-        border-radius: 1rem;
-        background-color: #d6d6d6;
         grid-row-start: 3;
         grid-column-start: 4;
 
