@@ -1,69 +1,189 @@
 <script setup>
   import { ref } from 'vue';
   import { uid } from 'uid';
-  import TodoItem from '../components/TodoItem.vue';
   import TodoCreator from '../components/TodoCreator.vue';
 
   const todoList = ref([]);
 
-  const addTodo = (todo) => {
-    todoList.value.push({
-      id: uid(),
-      todo,
-      isCompleted: null,
-      isEditing: null,
-    });
+  const createMode = ref(false);
+
+  function toggleCreateMode() {
+    createMode.value = !createMode.value;
   }
 
 </script>
 
-
 <template>
-  <div class="card">
-    <div class="card__header">
-      <h2 class="card__title">Welcome Back!</h2>
-      <TodoCreator @add-todo="addTodo"/>
-    </div>
-    <div class="todo__lists">
-      <p>{{ todo }}</p>
+  <div class="wrapper">
+    <!-- Modals -->
+    <div v-show="createMode" class="overlay">
+      <TodoCreator :createMode="createMode" @toggle="toggleCreateMode"/>
     </div>
 
+    <main>
+      <div class="content__header">
+        <h2>Welcome Back!</h2>
+        <button class="learn-more" @click="toggleCreateMode">
+          <span class="circle" aria-hidden="true" >
+            <i class='bx bx-plus icon arrow'></i>
+          </span>
+          <span class="button-text">Create</span>
+        </button>
+      </div>
+      
+    </main>
   </div>
-
 </template>
 
 <style lang="scss" scoped>
-
-  .card {
-    width: 400px;
-    height: 650px;
-    max-height: 650px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    padding: 20px;
+  .wrapper {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
     display: flex;
-    flex-direction: column;
-    align-items: space-between;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
 
-    .card__header {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      padding: .5rem 0;
-    }
-
-    .todo__lists {
-      display: flex;
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      gap: 1rem;
-      padding: .5rem 0;
-      background-color: #e9e8e8;
-      border-radius: 10px;
-
+      backdrop-filter: blur(5px);
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn .3s ease;
+      z-index: 2;
     }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    main {
+      width: 45vw;
+      height: 70vh;
+      background: purple; 
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+
+      .content__header {
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: space-between; 
+        align-items: center;
+
+        h2 {
+          font-size: 3rem;
+          font-weight: 500;
+        }
+
+        button {
+          position: relative;
+          display: inline-block;
+          cursor: pointer;
+          outline: none;
+          border: 0;
+          vertical-align: middle;
+          text-decoration: none;
+          background: transparent;
+          padding: 0;
+          font-size: inherit;
+          font-family: inherit;
+
+          &.learn-more {
+            width: 10rem;
+            height: auto;
+
+            .circle {
+              transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+              position: relative;
+              display: block;
+              margin: 0;
+              width: 3rem;
+              height: 3rem;
+              background: #282936;
+              border-radius: 1.625rem;
+
+              .icon {
+                transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                background: #fff;
+
+                &.arrow {
+                  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+                  left: 0.625rem;
+                  width: 1.125rem;
+                  height: 0.125rem;
+                  background: none;
+
+                  &::before {
+                    position: absolute;
+                    content: "";
+                    top: -0.29rem;
+                    right: 0.0625rem;
+                    width: 0.625rem;
+                    height: 0.625rem;
+                    border-top: 0.125rem solid #fff;
+                    border-right: 0.125rem solid #fff;
+                    transform: rotate(45deg);
+                  }
+                }
+              }
+            }
+
+            .button-text {
+              transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              padding: 0.75rem 0;
+              margin: 0 0 0 1.85rem;
+              color: #282936;
+              font-weight: 700;
+              line-height: 1.6;
+              text-align: center;
+              text-transform: uppercase;
+            }
+
+            &:hover {
+              .circle {
+                width: 100%;
+
+                .icon.arrow {
+                  background: #fff;
+                  transform: translate(1rem, 0);
+                }
+              }
+
+              .button-text {
+                color: #fff;
+              }
+            }
+          }
+        }
+
+      }
+    }
+
+
   }
-
-
 </style>

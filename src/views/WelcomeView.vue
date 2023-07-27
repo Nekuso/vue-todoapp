@@ -4,7 +4,7 @@
 
 
 <template>
-    <div class="wrapper">
+    <div class="container">
         <div class="content">
             <h2>Kaihzan-Nixxo Jamilla</h2>
             <!-- button the links to /home -->
@@ -16,9 +16,8 @@
     </div>
 </template>
 
-<style lang="scss">
-
-    .wrapper {
+<style lang="scss" scoped>
+    .container {
         width: 100%;
         height: 100vh;
         background: #f5f5f5;
@@ -84,7 +83,6 @@
     .content .button:focus {
         outline: none;
     }
-
     .content .button span {
         font-size: 20px;
         font-weight: 500;
