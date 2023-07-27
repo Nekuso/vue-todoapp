@@ -1,186 +1,217 @@
 <script setup>
-  import { ref } from 'vue';
-  import TodoCreator from '../components/TodoCreator.vue';
+import { ref } from "vue";
+import { uid } from "uid";
+import TodoCreator from "../components/TodoCreator.vue";
 
-  const todoList = ref([]);
+const todoList = ref([
+  {
+    id: uid(),
+    todoTitle: "Make Breakfast",
+    todoDescription: "Make breakfast and eat before going to work",
+    isCompleted: false,
+  },
+  {
+    id: uid(),
+    todoTitle: "Go to work",
+    todoDescription: "Go to work and do some work",
+    isCompleted: false,
+  },
+  {
+    id: uid(),
+    todoTitle: "Go to gym",
+    todoDescription: "Go to gym and do some workout",
+    isCompleted: false,
+  },
+]);
 
-  const createMode = ref(false);
+const createMode = ref(false);
 
-  function toggleCreateMode() {
-    createMode.value = !createMode.value;
-  }
+function toggleCreateMode() {
+  createMode.value = !createMode.value;
+}
 
+function addTodoProps(todoProps) {
+  todoList.value.push({
+    id: uid(),
+    todoTitle: todoProps.todoTitle,
+    todoDescription: todoProps.todoDescription,
+    isCompleted: false,
+  });
+  toggleCreateMode();
+}
 </script>
 
 <template>
   <div class="wrapper">
     <!-- Modals -->
     <div v-show="createMode" class="overlay">
-      <TodoCreator :createMode="createMode" @toggle="toggleCreateMode"/>
+      <TodoCreator @todo-props="addTodoProps" />
     </div>
 
     <main>
       <div class="content__header">
         <h2>Welcome Back!</h2>
         <button class="learn-more" @click="toggleCreateMode">
-          <span class="circle" aria-hidden="true" >
-            <i class='bx bx-plus icon arrow'></i>
+          <span class="circle" aria-hidden="true">
+            <i class="bx bx-plus icon arrow"></i>
           </span>
           <span class="button-text">Create</span>
         </button>
       </div>
 
       <div class="content__categories">
-        
+        <div class="all__items">
+          {{ todoList }}
+        </div>
+        <div class="pending__items"></div>
+        <div class="completed__items"></div>
       </div>
-      
     </main>
   </div>
 </template>
 
 <style lang="scss" scoped>
-  .wrapper {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    align-items: center;
     justify-content: center;
-    z-index: 1;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+    z-index: 2;
+  }
 
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  main {
+    width: 700px;
+    height: 700px;
+    // background: purple;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+
+    .content__header {
       width: 100%;
-      height: 100%;
-      backdrop-filter: blur(5px);
-      background-color: rgba(0, 0, 0, 0.5);
+      height: auto;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn .3s ease;
-      z-index: 2;
-    }
-
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-      }
-
-      100% {
-        opacity: 1;
-      }
-    }
-
-    main {
-      width: 700px;
-      height: 700px;
-      // background: purple; 
-      display: flex;
-      flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      gap: .5rem;
 
-      .content__header {
-        width: 100%;
-        height: auto;
-        display: flex;
-        justify-content: space-between; 
-        align-items: center;
+      h2 {
+        font-size: 2rem;
+        font-weight: 500;
+      }
 
-        h2 {
-          font-size: 2rem;
-          font-weight: 500;
-        }
+      button {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        outline: none;
+        border: 0;
+        vertical-align: middle;
+        text-decoration: none;
+        background: transparent;
+        padding: 0;
+        font-size: inherit;
+        font-family: inherit;
 
-        button {
-          position: relative;
-          display: inline-block;
-          cursor: pointer;
-          outline: none;
-          border: 0;
-          vertical-align: middle;
-          text-decoration: none;
-          background: transparent;
-          padding: 0;
-          font-size: inherit;
-          font-family: inherit;
+        &.learn-more {
+          width: 10rem;
+          height: auto;
 
-          &.learn-more {
-            width: 10rem;
-            height: auto;
+          .circle {
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            position: relative;
+            display: block;
+            margin: 0;
+            width: 3rem;
+            height: 3rem;
+            background: #282936;
+            border-radius: 1.625rem;
 
-            .circle {
+            .icon {
               transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-              position: relative;
-              display: block;
-              margin: 0;
-              width: 3rem;
-              height: 3rem;
-              background: #282936;
-              border-radius: 1.625rem;
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              margin: auto;
+              background: #fff;
 
-              .icon {
+              &.arrow {
                 transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                margin: auto;
-                background: #fff;
+                left: 0.625rem;
+                width: 1.125rem;
+                height: 0.125rem;
+                background: none;
 
-                &.arrow {
-                  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-                  left: 0.625rem;
-                  width: 1.125rem;
-                  height: 0.125rem;
-                  background: none;
-
-                  &::before {
-                    position: absolute;
-                    content: "";
-                    top: -0.29rem;
-                    right: 0.0625rem;
-                    width: 0.625rem;
-                    height: 0.625rem;
-                    border-top: 0.125rem solid #fff;
-                    border-right: 0.125rem solid #fff;
-                    transform: rotate(45deg);
-                  }
+                &::before {
+                  position: absolute;
+                  content: "";
+                  top: -0.29rem;
+                  right: 0.0625rem;
+                  width: 0.625rem;
+                  height: 0.625rem;
+                  border-top: 0.125rem solid #fff;
+                  border-right: 0.125rem solid #fff;
+                  transform: rotate(45deg);
                 }
+              }
+            }
+          }
+
+          .button-text {
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0.75rem 0;
+            margin: 0 0 0 1.85rem;
+            color: #282936;
+            font-weight: 700;
+            line-height: 1.6;
+            text-align: center;
+            text-transform: uppercase;
+          }
+
+          &:hover {
+            .circle {
+              width: 100%;
+
+              .icon.arrow {
+                background: #fff;
+                transform: translate(1rem, 0);
               }
             }
 
             .button-text {
-              transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-              position: absolute;
-              top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              padding: 0.75rem 0;
-              margin: 0 0 0 1.85rem;
-              color: #282936;
-              font-weight: 700;
-              line-height: 1.6;
-              text-align: center;
-              text-transform: uppercase;
-            }
-
-            &:hover {
-              .circle {
-                width: 100%;
-
-                .icon.arrow {
-                  background: #fff;
-                  transform: translate(1rem, 0);
-                }
-              }
-
-              .button-text {
-                color: #fff;
-              }
+              color: #fff;
             }
           }
         }
@@ -190,10 +221,42 @@
     .content__categories {
       width: 100%;
       height: 100%;
-      background: #c5c5c5;
+      // background: #c5c5c5;
       border-radius: 1rem;
+      display: grid;
+
+      grid-template-rows: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+      gap: 10px;
+      .all__items {
+        border-radius: 1rem;
+        background-color: #d6d6d6;
+        grid-row-start: 1;
+        grid-column-start: 1;
+
+        grid-row-end: 5;
+        grid-column-end: 4;
+      }
+      .pending__items {
+        border-radius: 1rem;
+        background-color: #d6d6d6;
+        grid-row-start: 1;
+        grid-column-start: 4;
+
+        grid-row-end: 3;
+        grid-column-end: 6;
+      }
+      .completed__items {
+        border-radius: 1rem;
+        background-color: #d6d6d6;
+        grid-row-start: 3;
+        grid-column-start: 4;
+
+        grid-row-end: 5;
+        grid-column-end: 6;
+      }
     }
-
-
   }
+}
 </style>
