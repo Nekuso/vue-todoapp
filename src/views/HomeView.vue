@@ -1,6 +1,5 @@
 <script setup>
   import { ref } from 'vue';
-  import { uid } from 'uid';
   import TodoCreator from '../components/TodoCreator.vue';
 
   const todoList = ref([]);
@@ -29,6 +28,10 @@
           </span>
           <span class="button-text">Create</span>
         </button>
+      </div>
+
+      <div class="content__categories">
+        
       </div>
       
     </main>
@@ -71,13 +74,14 @@
     }
 
     main {
-      width: 45vw;
-      height: 70vh;
-      background: purple; 
+      width: 700px;
+      height: 700px;
+      // background: purple; 
       display: flex;
       flex-direction: column;
-      justify-content: start;
+      justify-content: space-between;
       align-items: center;
+      gap: .5rem;
 
       .content__header {
         width: 100%;
@@ -87,7 +91,7 @@
         align-items: center;
 
         h2 {
-          font-size: 3rem;
+          font-size: 2rem;
           font-weight: 500;
         }
 
@@ -180,8 +184,14 @@
             }
           }
         }
-
       }
+    }
+
+    .content__categories {
+      width: 100%;
+      height: 100%;
+      background: #c5c5c5;
+      border-radius: 1rem;
     }
 
 

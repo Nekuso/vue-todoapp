@@ -4,6 +4,12 @@
   const todoTitle = ref('');
   const todoDescription = ref('');
 
+  const emit = defineEmits(['toggle']);
+
+  function createTodo() {
+    console.log(todoTitle.value, todoDescription.value);
+    emit('toggle');
+  }
   
 </script>
 
@@ -20,11 +26,11 @@
         </button>
       </div>
       <div class="input__container">
-        <input v-model="todo" type="text" class="title__input" placeholder="Title">
-        <button><i class='bx bxs-send'></i></button>
+        <input v-model="todoTitle" type="text" class="title__input" placeholder="Title">
+        <button @click="createTodo" ><i class='bx bxs-send'></i></button>
       </div>
     </div>
-    <textarea class="description__input" placeholder="Descripton"></textarea>
+    <textarea v-model="todoDescription" class="description__input" placeholder="Descripton"></textarea>
   </div>
 
 </template>
@@ -120,13 +126,13 @@
           padding: .7rem 1.2rem;
           border: none;
           border-radius: 10px;
-          background-color: #1e90ff;
+          background: #282936;
           color: #fff;
           cursor: pointer;
           transition: all .3s ease;
 
           &:hover {
-            background-color: #1877e6;
+            background-color: #40424f;
           }
 
           i {
