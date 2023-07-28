@@ -37,15 +37,15 @@ function toggleCreateMode() {
 
       <div class="content__categories">
         <div class="all__items category">
-          <h2>All Todos</h2>
+          <h2>📋 All Todos</h2>
           <TodoAll />
         </div>
         <div class="pending__items category">
-          <h2>Pendings</h2>
+          <h2>🕒 Pendings</h2>
           <TodoPending />
         </div>
         <div class="completed__items category">
-          <h2>Completed</h2>
+          <h2>✅ Completed</h2>
           <TodoCompleted />
         </div>
       </div>

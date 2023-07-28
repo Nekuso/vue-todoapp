@@ -2,22 +2,20 @@
 import { ref } from "vue";
 import { updateTodo, toggleViewMode, todoItem } from "../utils/todoUtils";
 
-const todoTitle = ref(todoItem.todoTitle);
-const todoDescription = ref(todoItem.todoDescription);
+const todoTitle = ref("");
+const todoDescription = ref("");
 
 const isEditing = ref(false);
 
 function editMode() {
   isEditing.value = true;
-  todoTitle.value = todoItem.todoTitle;
-  todoDescription.value = todoItem.todoDescription;
 }
 
 function validation() {
   if (todoTitle.value === "" || todoTitle.value === " ") {
     alert("Please enter a title");
   } else {
-    updateTodo(todoItem.id, todoTitle.value, todoDescription.value);
+    updateTodo(todoItem.value.id, todoTitle, todoDescription);
     todoTitle.value = "";
     todoDescription.value = "";
   }
@@ -43,7 +41,7 @@ function validation() {
       </div>
       <div class="input__container">
         <input
-          v-model="todoTitle"
+          v-model="todoItem.todoTitle"
           type="text"
           class="title__input"
           placeholder="Title"
@@ -58,7 +56,7 @@ function validation() {
       </div>
     </div>
     <textarea
-      v-model="todoDescription"
+      v-model="todoItem.todoDescription"
       class="description__input"
       placeholder="Descripton"
       :disabled="!isEditing"
