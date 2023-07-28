@@ -13,8 +13,10 @@ defineProps(["todoItem"]);
       />
     </div>
     <div class="todo__item__content">
-      <h2>{{ todoItem.todoTitle }}</h2>
-      <p>
+      <h2 :class="{ completed: todoItem.isCompleted }">
+        {{ todoItem.todoTitle }}
+      </h2>
+      <p :class="{ completed: todoItem.isCompleted }">
         {{ todoItem.todoDescription }}
       </p>
     </div>
@@ -26,7 +28,7 @@ defineProps(["todoItem"]);
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .todo__item {
   width: 100%;
   background: rgb(255, 255, 255);
@@ -90,6 +92,11 @@ defineProps(["todoItem"]);
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: #838383;
     }
   }
 

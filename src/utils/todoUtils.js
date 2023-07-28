@@ -44,6 +44,13 @@ export const createTodo = (todoTitle, todoDescription) => {
   return todoList.value.unshift(todo);
 };
 
+export const updateTodo = (id, todoTitle, todoDescription) => {
+  const index = todoList.value.findIndex((todo) => todo.id === id);
+  todoList.value[index].todoTitle = todoTitle;
+  todoList.value[index].todoDescription = todoDescription;
+  return todoList.value[index];
+};
+
 export const deleteTodo = (id) => {
   const index = todoList.value.findIndex((todo) => todo.id === id);
   return todoList.value.splice(index, 1);

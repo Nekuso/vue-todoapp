@@ -86,6 +86,8 @@ function toggleCreateMode() {
   main {
     width: 800px;
     height: 700px;
+    min-height: 700px;
+    max-height: 700px;
     // background: purple;
     display: flex;
     flex-direction: column;

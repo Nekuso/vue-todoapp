@@ -6,6 +6,17 @@ const todoTitle = ref("");
 const todoDescription = ref("");
 
 const emit = defineEmits(["toggle"]);
+
+function validation() {
+  if (todoTitle.value === "" || todoTitle.value === " ") {
+    alert("Please enter a title");
+  } else {
+    createTodo(todoTitle.value, todoDescription.value);
+    emit("toggle");
+    todoTitle.value = "";
+    todoDescription.value = "";
+  }
+}
 </script>
 
 <template>
@@ -33,16 +44,7 @@ const emit = defineEmits(["toggle"]);
           class="title__input"
           placeholder="Title"
         />
-        <button
-          @click="
-            () => {
-              createTodo(todoTitle, todoDescription);
-              emit('toggle');
-              todoTitle = '';
-              todoDescription = '';
-            }
-          "
-        >
+        <button @click="validation">
           <i class="bx bxs-send"></i>
         </button>
       </div>
