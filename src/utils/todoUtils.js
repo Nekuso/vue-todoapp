@@ -1,5 +1,5 @@
 import { uid } from "uid";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 export const todoList = ref([
   {
@@ -21,7 +21,19 @@ export const todoList = ref([
     isCompleted: false,
   },
 ]);
-// make the todo utils
+
+export const pendingList = ref(
+  computed(() => {
+    return todoList.value.filter((todo) => !todo.isCompleted);
+  })
+);
+
+export const completedList = ref(
+  computed(() => {
+    return todoList.value.filter((todo) => todo.isCompleted);
+  })
+);
+
 export const createTodo = (todoTitle, todoDescription) => {
   const todo = {
     id: uid(),
@@ -30,4 +42,14 @@ export const createTodo = (todoTitle, todoDescription) => {
     isCompleted: false,
   };
   return todoList.value.unshift(todo);
+};
+
+export const deleteTodo = (id) => {
+  const index = todoList.value.findIndex((todo) => todo.id === id);
+  return todoList.value.splice(index, 1);
+};
+
+export const completeTodo = (id) => {
+  const index = todoList.value.findIndex((todo) => todo.id === id);
+  return (todoList.value[index].isCompleted = !todoList.value[index]);
 };

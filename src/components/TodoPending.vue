@@ -1,10 +1,16 @@
 <script setup>
-import { todoList } from "../utils/todoUtils";
+import { computed } from "vue";
+import { pendingList } from "../utils/todoUtils";
+import TodoItem from "./TodoItem.vue";
 </script>
 
 <template>
   <div class="pending__items__content">
-    {{ todoList }}
+    <TodoItem
+      v-for="todoItem in pendingList"
+      :todoItem="todoItem"
+      :key="todoItem.id"
+    />
   </div>
 </template>
 

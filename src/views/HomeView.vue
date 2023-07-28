@@ -84,7 +84,7 @@ function toggleCreateMode() {
   }
 
   main {
-    width: 700px;
+    width: 800px;
     height: 700px;
     // background: purple;
     display: flex;

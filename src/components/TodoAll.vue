@@ -5,7 +5,11 @@ import TodoItem from "./TodoItem.vue";
 
 <template>
   <div class="all__items__content">
-    <TodoItem v-for="(todoItem, index) in todoList" :todoItem="todoItem" :key="todoItem.id" />
+    <TodoItem
+      v-for="todoItem in todoList"
+      :todoItem="todoItem"
+      :key="todoItem.id"
+    />
   </div>
 </template>
 

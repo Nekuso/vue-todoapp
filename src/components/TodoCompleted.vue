@@ -1,10 +1,15 @@
 <script setup>
-import { todoList } from "../utils/todoUtils";
+import { completedList } from "../utils/todoUtils";
+import TodoItem from "./TodoItem.vue";
 </script>
 
 <template>
   <div class="completed__items__content">
-    {{ todoList }}
+    <TodoItem
+      v-for="todoItem in completedList"
+      :todoItem="todoItem"
+      :key="todoItem.id"
+    />
   </div>
 </template>
 

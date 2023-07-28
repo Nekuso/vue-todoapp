@@ -1,20 +1,25 @@
 <script setup>
+import { deleteTodo, completeTodo } from "../utils/todoUtils";
 defineProps(["todoItem"]);
 </script>
 
 <template>
   <div class="todo__item">
     <div class="todo__item__complete">
-      <input type="checkbox" />
+      <input
+        v-model="todoItem.isCompleted"
+        type="checkbox"
+        @click="completeTodo(todoItem.id)"
+      />
     </div>
     <div class="todo__item__content">
-      <h2>{{todoItem.todoTitle}}</h2>
+      <h2>{{ todoItem.todoTitle }}</h2>
       <p>
-        {{todoItem.todoDescription}}
+        {{ todoItem.todoDescription }}
       </p>
     </div>
     <div class="todo__item__actions">
-      <button>
+      <button @click="deleteTodo(todoItem.id)">
         <i class="bx bx-trash"></i>
       </button>
     </div>
@@ -103,7 +108,7 @@ defineProps(["todoItem"]);
       width: 2rem;
       height: 2rem;
       border-radius: 50%;
-    //   border: 1px solid #282936;
+      //   border: 1px solid #282936;
       background: #fff;
       cursor: pointer;
       margin: 0.5rem 0;
