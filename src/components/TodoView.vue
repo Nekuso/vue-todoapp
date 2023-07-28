@@ -31,6 +31,7 @@ function validation() {
           @click="
             () => {
               toggleViewMode();
+              isEditing = false;
               todoTitle = '';
               todoDescription = '';
             }
