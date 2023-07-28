@@ -1,6 +1,8 @@
 <script setup>
 import { todoList } from "../utils/todoUtils";
 import TodoItem from "./TodoItem.vue";
+
+const emit = defineEmits(["toggleView"]);
 </script>
 
 <template>
@@ -9,6 +11,7 @@ import TodoItem from "./TodoItem.vue";
       v-for="todoItem in todoList"
       :todoItem="todoItem"
       :key="todoItem.id"
+      @toggleView="emit('toggleView')"
     />
   </div>
 </template>

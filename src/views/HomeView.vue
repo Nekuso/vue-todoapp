@@ -1,14 +1,20 @@
 <script setup>
 import { ref } from "vue";
 import TodoCreator from "../components/TodoCreator.vue";
+import TodoView from "../components/TodoView.vue";
 import TodoAll from "../components/TodoAll.vue";
 import TodoPending from "../components/TodoPending.vue";
 import TodoCompleted from "../components/TodoCompleted.vue";
 
 const createMode = ref(false);
+const viewMode = ref(false);
 
 function toggleCreateMode() {
   createMode.value = !createMode.value;
+}
+
+function toggleViewMode() {
+  viewMode.value = !viewMode.value;
 }
 </script>
 
@@ -17,6 +23,9 @@ function toggleCreateMode() {
     <!-- Modals -->
     <div v-show="createMode" class="overlay">
       <TodoCreator @toggle="toggleCreateMode" />
+    </div>
+    <div v-show="viewMode" class="overlay">
+      <TodoView @toggleView="viewMode" />
     </div>
 
     <main>
@@ -33,7 +42,7 @@ function toggleCreateMode() {
       <div class="content__categories">
         <div class="all__items category">
           <h2>All Todos</h2>
-          <TodoAll />
+          <TodoAll @toggleView="toggleViewMode"/>
         </div>
         <div class="pending__items category">
           <h2>Pendings</h2>

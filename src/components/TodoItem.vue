@@ -1,5 +1,8 @@
 <script setup>
 import { deleteTodo, completeTodo } from "../utils/todoUtils";
+
+const emit = defineEmits(["toggleView"]);
+
 defineProps(["todoItem"]);
 </script>
 
@@ -12,8 +15,8 @@ defineProps(["todoItem"]);
         @click="completeTodo(todoItem.id)"
       />
     </div>
-    <div class="todo__item__content">
-      <h2 :class="{ completed: todoItem.isCompleted }">
+    <div class="todo__item__content" @click="emit('toggleView')">
+      <h2 :class="{ completed: todoItem.isCompleted } ">
         {{ todoItem.todoTitle }}
       </h2>
       <p :class="{ completed: todoItem.isCompleted }">
