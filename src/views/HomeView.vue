@@ -1,43 +1,14 @@
 <script setup>
 import { ref } from "vue";
-import { uid } from "uid";
 import TodoCreator from "../components/TodoCreator.vue";
-
-const todoList = ref([
-  {
-    id: uid(),
-    todoTitle: "Make Breakfast",
-    todoDescription: "Make breakfast and eat before going to work",
-    isCompleted: false,
-  },
-  {
-    id: uid(),
-    todoTitle: "Go to work",
-    todoDescription: "Go to work and do some work",
-    isCompleted: false,
-  },
-  {
-    id: uid(),
-    todoTitle: "Go to gym",
-    todoDescription: "Go to gym and do some workout",
-    isCompleted: false,
-  },
-]);
+import TodoAll from "../components/TodoAll.vue";
+import TodoPending from "../components/TodoPending.vue";
+import TodoCompleted from "../components/TodoCompleted.vue";
 
 const createMode = ref(false);
 
 function toggleCreateMode() {
   createMode.value = !createMode.value;
-}
-
-function addTodoProps(todoProps) {
-  todoList.value.push({
-    id: uid(),
-    todoTitle: todoProps.todoTitle,
-    todoDescription: todoProps.todoDescription,
-    isCompleted: false,
-  });
-  toggleCreateMode();
 }
 </script>
 
@@ -45,7 +16,7 @@ function addTodoProps(todoProps) {
   <div class="wrapper">
     <!-- Modals -->
     <div v-show="createMode" class="overlay">
-      <TodoCreator @toggle="toggleCreateMode" @todo-props="addTodoProps" />
+      <TodoCreator @toggle="toggleCreateMode" />
     </div>
 
     <main>
@@ -62,12 +33,16 @@ function addTodoProps(todoProps) {
       <div class="content__categories">
         <div class="all__items category">
           <h2>All Todos</h2>
-          <div class="all__items__content">
-            {{ todoList }}
-          </div>
+          <TodoAll />
         </div>
-        <div class="pending__items category"></div>
-        <div class="completed__items category"></div>
+        <div class="pending__items category">
+          <h2>Pendings</h2>
+          <TodoPending />
+        </div>
+        <div class="completed__items category">
+          <h2>Completed</h2>
+          <TodoCompleted />
+        </div>
       </div>
     </main>
   </div>
@@ -242,7 +217,7 @@ function addTodoProps(todoProps) {
         padding: 1.6rem;
         gap: 1rem;
         border: 1px solid #282936;
-        background-color: #dadada;
+        background-color: #ffffff;
       }
       .all__items {
         grid-row-start: 1;

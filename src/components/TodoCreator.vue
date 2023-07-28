@@ -1,19 +1,11 @@
 <script setup>
 import { ref } from "vue";
+import { createTodo } from "../utils/todoUtils";
 
 const todoTitle = ref("");
 const todoDescription = ref("");
 
-const emit = defineEmits(["toggle", "todo-props"]);
-
-function createTodo() {
-  emit("todo-props", {
-    todoTitle: todoTitle.value,
-    todoDescription: todoDescription.value,
-  });
-  todoTitle.value = "";
-  todoDescription.value = "";
-}
+const emit = defineEmits(["toggle"]);
 </script>
 
 <template>
@@ -22,7 +14,15 @@ function createTodo() {
       <div class="card__title">
         <h2>Create Todo</h2>
         <!-- close button -->
-        <button @click="$emit('toggle')">
+        <button
+          @click="
+            () => {
+              emit('toggle');
+              todoTitle = '';
+              todoDescription = '';
+            }
+          "
+        >
           <i class="bx bx-x"></i>
         </button>
       </div>
@@ -33,7 +33,18 @@ function createTodo() {
           class="title__input"
           placeholder="Title"
         />
-        <button @click="createTodo"><i class="bx bxs-send"></i></button>
+        <button
+          @click="
+            () => {
+              createTodo(todoTitle, todoDescription);
+              emit('toggle');
+              todoTitle = '';
+              todoDescription = '';
+            }
+          "
+        >
+          <i class="bx bxs-send"></i>
+        </button>
       </div>
     </div>
     <textarea
