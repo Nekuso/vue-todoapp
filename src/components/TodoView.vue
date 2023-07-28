@@ -1,16 +1,23 @@
 <script setup>
 import { ref } from "vue";
+import { updateTodo, toggleViewMode, todoItem } from "../utils/todoUtils";
 
-const emit = defineEmits(["toggleView"]);
+const todoTitle = ref(todoItem.todoTitle);
+const todoDescription = ref(todoItem.todoDescription);
 
-const todoTitle = ref("");
-const todoDescription = ref("");
+const isEditing = ref(false);
+
+function editMode() {
+  isEditing.value = true;
+  todoTitle.value = todoItem.todoTitle;
+  todoDescription.value = todoItem.todoDescription;
+}
 
 function validation() {
   if (todoTitle.value === "" || todoTitle.value === " ") {
     alert("Please enter a title");
   } else {
-    emit("toggleView");
+    updateTodo(todoItem.id, todoTitle.value, todoDescription.value);
     todoTitle.value = "";
     todoDescription.value = "";
   }
@@ -25,7 +32,7 @@ function validation() {
         <button
           @click="
             () => {
-              emit('toggleView');
+              toggleViewMode();
               todoTitle = '';
               todoDescription = '';
             }
@@ -40,9 +47,12 @@ function validation() {
           type="text"
           class="title__input"
           placeholder="Title"
-          disabled
+          :disabled="!isEditing"
         />
-        <button @click="validation">
+        <button v-if="!isEditing" @click="editMode">
+          <i class="bx bx-edit"></i>
+        </button>
+        <button v-else="isEditing" @click="validation">
           <i class="bx bxs-send"></i>
         </button>
       </div>
@@ -51,7 +61,7 @@ function validation() {
       v-model="todoDescription"
       class="description__input"
       placeholder="Descripton"
-      disabled
+      :disabled="!isEditing"
     ></textarea>
   </div>
 </template>

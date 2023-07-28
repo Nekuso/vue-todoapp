@@ -1,5 +1,10 @@
 <script setup>
-import { deleteTodo, completeTodo } from "../utils/todoUtils";
+import {
+  deleteTodo,
+  completeTodo,
+  toggleViewMode,
+  viewTodo,
+} from "../utils/todoUtils";
 
 const emit = defineEmits(["toggleView"]);
 
@@ -15,8 +20,8 @@ defineProps(["todoItem"]);
         @click="completeTodo(todoItem.id)"
       />
     </div>
-    <div class="todo__item__content" @click="emit('toggleView')">
-      <h2 :class="{ completed: todoItem.isCompleted } ">
+    <div class="todo__item__content" @click="viewTodo(todoItem.id)">
+      <h2 :class="{ completed: todoItem.isCompleted }">
         {{ todoItem.todoTitle }}
       </h2>
       <p :class="{ completed: todoItem.isCompleted }">
@@ -67,6 +72,7 @@ defineProps(["todoItem"]);
   }
 
   .todo__item__content {
+    cursor: pointer;
     width: 100%;
     display: flex;
     flex-direction: column;

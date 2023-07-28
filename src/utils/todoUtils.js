@@ -1,6 +1,19 @@
 import { uid } from "uid";
 import { ref, computed } from "vue";
 
+export const viewMode = ref(false);
+export const todoItem = ref({});
+
+export const toggleViewMode = () => {
+  viewMode.value = !viewMode.value;
+};
+
+export const viewTodo = (id) => {
+  const index = todoList.value.findIndex((todo) => todo.id === id);
+  todoItem.value = todoList.value[index];
+  toggleViewMode();
+};
+
 export const todoList = ref([
   {
     id: uid(),

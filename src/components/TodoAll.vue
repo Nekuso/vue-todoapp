@@ -11,7 +11,6 @@ const emit = defineEmits(["toggleView"]);
       v-for="todoItem in todoList"
       :todoItem="todoItem"
       :key="todoItem.id"
-      @toggleView="emit('toggleView')"
     />
   </div>
 </template>
