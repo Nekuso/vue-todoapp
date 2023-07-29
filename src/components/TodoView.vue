@@ -2,9 +2,6 @@
 import { ref } from "vue";
 import { updateTodo, toggleViewMode, todoItem } from "../utils/todoUtils";
 
-const todoTitle = ref("");
-const todoDescription = ref("");
-
 const isEditing = ref(false);
 
 function editMode() {
@@ -12,12 +9,12 @@ function editMode() {
 }
 
 function validation() {
-  if (todoTitle.value === "" || todoTitle.value === " ") {
+  if (todoItem.todoTitle === "" || todoItem.todoTitle === " ") {
     alert("Please enter a title");
   } else {
-    updateTodo(todoItem.value.id, todoTitle, todoDescription);
-    todoTitle.value = "";
-    todoDescription.value = "";
+    updateTodo(todoItem.id, todoItem.todoTitle, todoItem.todoDescription);
+    toggleViewMode();
+    isEditing.value = false;
   }
 }
 </script>
@@ -28,12 +25,11 @@ function validation() {
       <div class="card__title">
         <h2>View Todo</h2>
         <button
+          title="Close"
           @click="
             () => {
               toggleViewMode();
               isEditing = false;
-              todoTitle = '';
-              todoDescription = '';
             }
           "
         >
@@ -48,10 +44,10 @@ function validation() {
           placeholder="Title"
           :disabled="!isEditing"
         />
-        <button v-if="!isEditing" @click="editMode">
+        <button title="Edit Todo" v-if="!isEditing" @click="editMode">
           <i class="bx bx-edit"></i>
         </button>
-        <button v-else="isEditing" @click="validation">
+        <button title="Save Todo" v-else="isEditing" @click="validation">
           <i class="bx bxs-send"></i>
         </button>
       </div>

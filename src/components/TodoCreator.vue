@@ -1,18 +1,16 @@
 <script setup>
 import { ref } from "vue";
-import { createTodo } from "../utils/todoUtils";
+import { createTodo, toggleCreateMode } from "../utils/todoUtils";
 
 const todoTitle = ref("");
 const todoDescription = ref("");
-
-const emit = defineEmits(["toggle"]);
 
 function validation() {
   if (todoTitle.value === "" || todoTitle.value === " ") {
     alert("Please enter a title");
   } else {
     createTodo(todoTitle.value, todoDescription.value);
-    emit("toggle");
+    toggleCreateMode();
     todoTitle.value = "";
     todoDescription.value = "";
   }
@@ -24,11 +22,11 @@ function validation() {
     <div class="card__header">
       <div class="card__title">
         <h2>Create Todo</h2>
-        <!-- close button -->
         <button
+          title="Close"
           @click="
             () => {
-              emit('toggle');
+              toggleCreateMode();
               todoTitle = '';
               todoDescription = '';
             }
@@ -44,7 +42,7 @@ function validation() {
           class="title__input"
           placeholder="Title"
         />
-        <button @click="validation">
+        <button title="Submit" @click="validation">
           <i class="bx bxs-send"></i>
         </button>
       </div>

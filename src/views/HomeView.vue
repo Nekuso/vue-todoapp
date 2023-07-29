@@ -5,20 +5,14 @@ import TodoView from "../components/TodoView.vue";
 import TodoAll from "../components/TodoAll.vue";
 import TodoPending from "../components/TodoPending.vue";
 import TodoCompleted from "../components/TodoCompleted.vue";
-import { viewMode } from "../utils/todoUtils";
-
-const createMode = ref(false);
-
-function toggleCreateMode() {
-  createMode.value = !createMode.value;
-}
+import { viewMode, createMode, toggleCreateMode } from "../utils/todoUtils";
 </script>
 
 <template>
   <div class="wrapper">
     <!-- Modals -->
     <div v-show="createMode" class="overlay">
-      <TodoCreator @toggle="toggleCreateMode" />
+      <TodoCreator />
     </div>
     <div v-show="viewMode" class="overlay">
       <TodoView />
@@ -246,6 +240,56 @@ function toggleCreateMode() {
 
         grid-row-end: 5;
         grid-column-end: 6;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    padding: 0 1rem;
+    .overlay {
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+    main {
+      .content__header {
+        h2 {
+          font-size: 1.5rem;
+        }
+      }
+      .content__categories {
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr;
+
+        .all__items {
+          grid-row-start: 1;
+          grid-column-start: 1;
+
+          grid-row-end: 2;
+          grid-column-end: 2;
+        }
+
+        .pending__items {
+          grid-row-start: 2;
+          grid-column-start: 1;
+
+          grid-row-end: 3;
+          grid-column-end: 2;
+        }
+
+        .completed__items {
+          grid-row-start: 3;
+          grid-column-start: 1;
+
+          grid-row-end: 4;
+          grid-column-end: 2;
+        }
       }
     }
   }

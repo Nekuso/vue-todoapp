@@ -1,8 +1,44 @@
 import { uid } from "uid";
-import { ref, computed } from "vue";
+import { ref, computed, reactive } from "vue";
+
+function saveTodo() {
+  localStorage.setItem("todoList", JSON.stringify(todoList.value));
+}
+export const todoList = ref(
+  JSON.parse(localStorage.getItem("todoList")) || [
+    {
+      id: uid(),
+      todoTitle: "Make Breakfast",
+      todoDescription: "Make breakfast and eat before going to work",
+      isCompleted: false,
+    },
+    {
+      id: uid(),
+      todoTitle: "Go to work",
+      todoDescription: "Go to work and do some work",
+      isCompleted: false,
+    },
+    {
+      id: uid(),
+      todoTitle: "Go to gym",
+      todoDescription: "Go to gym and do some workout",
+      isCompleted: false,
+    },
+  ]
+);
+export const todoItem = reactive({
+  id: "",
+  todoTitle: "",
+  todoDescription: "",
+  isCompleted: false,
+});
 
 export const viewMode = ref(false);
-export const todoItem = ref({});
+export const createMode = ref(false);
+
+export const toggleCreateMode = () => {
+  createMode.value = !createMode.value;
+};
 
 export const toggleViewMode = () => {
   viewMode.value = !viewMode.value;
@@ -10,30 +46,12 @@ export const toggleViewMode = () => {
 
 export const viewTodo = (id) => {
   const index = todoList.value.findIndex((todo) => todo.id === id);
-  todoItem.value = todoList.value[index];
+  todoItem.id = todoList.value[index].id;
+  todoItem.todoTitle = todoList.value[index].todoTitle;
+  todoItem.todoDescription = todoList.value[index].todoDescription;
+  todoItem.isCompleted = todoList.value[index].isCompleted;
   toggleViewMode();
 };
-
-export const todoList = ref([
-  {
-    id: uid(),
-    todoTitle: "Make Breakfast",
-    todoDescription: "Make breakfast and eat before going to work",
-    isCompleted: false,
-  },
-  {
-    id: uid(),
-    todoTitle: "Go to work",
-    todoDescription: "Go to work and do some work",
-    isCompleted: false,
-  },
-  {
-    id: uid(),
-    todoTitle: "Go to gym",
-    todoDescription: "Go to gym and do some workout",
-    isCompleted: false,
-  },
-]);
 
 export const pendingList = ref(
   computed(() => {
@@ -54,22 +72,26 @@ export const createTodo = (todoTitle, todoDescription) => {
     todoDescription,
     isCompleted: false,
   };
-  return todoList.value.unshift(todo);
+  todoList.value.unshift(todo);
+  return saveTodo();
 };
 
 export const updateTodo = (id, todoTitle, todoDescription) => {
   const index = todoList.value.findIndex((todo) => todo.id === id);
   todoList.value[index].todoTitle = todoTitle;
   todoList.value[index].todoDescription = todoDescription;
-  return todoList.value[index];
+  todoList.value[index];
+  return saveTodo();
 };
 
 export const deleteTodo = (id) => {
   const index = todoList.value.findIndex((todo) => todo.id === id);
-  return todoList.value.splice(index, 1);
+  todoList.value.splice(index, 1);
+  return saveTodo();
 };
 
 export const completeTodo = (id) => {
   const index = todoList.value.findIndex((todo) => todo.id === id);
-  return (todoList.value[index].isCompleted = !todoList.value[index]);
+  todoList.value[index].isCompleted = !todoList.value[index];
+  return saveTodo();
 };
