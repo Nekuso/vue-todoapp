@@ -217,8 +217,14 @@ import { viewMode, createMode, toggleCreateMode } from "../utils/todoUtils";
         border-radius: 1rem;
         padding: 1.6rem;
         gap: 1rem;
-        border: 1px solid #282936;
+        // border: 1px solid #282936;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
         background-color: #ffffff;
+
+        h2 {
+          font-size: 1.2rem;
+          font-weight: 600;
+        }
       }
       .all__items {
         grid-row-start: 1;
@@ -260,7 +266,7 @@ import { viewMode, createMode, toggleCreateMode } from "../utils/todoUtils";
     main {
       .content__header {
         h2 {
-          font-size: 1.5rem;
+          font-size: 1.3rem;
         }
       }
       .content__categories {

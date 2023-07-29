@@ -92,6 +92,6 @@ export const deleteTodo = (id) => {
 
 export const completeTodo = (id) => {
   const index = todoList.value.findIndex((todo) => todo.id === id);
-  todoList.value[index].isCompleted = !todoList.value[index];
+  todoList.value[index].isCompleted = !todoList.value[index].isCompleted;
   return saveTodo();
 };
